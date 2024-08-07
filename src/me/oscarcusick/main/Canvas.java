@@ -1,5 +1,10 @@
 package me.oscarcusick.main;
 
+import me.oscarcusick.main.DrawElements.TextElement;
+import me.oscarcusick.main.Engine.Timing;
+import me.oscarcusick.main.Math.Vector2;
+import org.w3c.dom.Text;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
@@ -18,17 +23,12 @@ public class Canvas extends JComponent {
     static final int ScreenX = 0, ScreenY = 1; // definition of element iterator thing
     int[] ScreenDimensions = new int[2]; // to store size of window when initializing
 
-    // delta time shit
-    // DeltaTime is the difference in time between frames, measured in milliseconds compared to Unity's seconds.
-    // To make graphics or anything change at a static rate, independent of FPS, multiply the change by DeltaTime, it will move quicker but just change it by less
-    Long CurrentTime, LastTime, DeltaTime;
-    static int TargetFPS = 60; // how many times will the screen update per second
-    float RealFPS = 0; // what is the real FPS count for this loop, updated per render call
-    float MSPerFrame = (1000f / TargetFPS);
 
 
     // background hue for GayGB
     float[] HSVHue = {0 , 30};
+
+
 
     // Colour Calculation Class / instantiate ColourHelper
     public ColourHelper CH = new ColourHelper();
@@ -36,39 +36,22 @@ public class Canvas extends JComponent {
     DebugHandler DH = new DebugHandler();
     // User Interaction Handler
     InteractionHandler IH;
+    Timing Time;
 
     public Canvas(int WindowSizeX, int WindowSizeY, InteractionHandler IH) {
         ScreenDimensions[ScreenX] = WindowSizeX;
         ScreenDimensions[ScreenY] = WindowSizeY;
 
         this.IH = IH;
-
-        // delta time shit
-        CurrentTime = System.nanoTime();
+        this.Time = new Timing(60);
     }
 
     public void paint(Graphics g) { // main paint loop
-        // DeltaTime
-        LastTime = CurrentTime;
-        CurrentTime = System.nanoTime();
-        DeltaTime = (CurrentTime - LastTime) / 1000000; // milliseconds
-        RealFPS = 1000f / DeltaTime; // what is the actual calculated FPS for this frame
-
-        // update window information to properly size the render scale & prevent making the window too small
-        //ScreenDimensions[ScreenX] = javax.swing.FocusManager.getCurrentManager().getActiveWindow().getWidth(); // causes errors when tabbed out
-        //ScreenDimensions[ScreenY] = javax.swing.FocusManager.getCurrentManager().getActiveWindow().getHeight();
-
-        if (MSPerFrame > DeltaTime) { // sleep if we are running too fast
-            try {
-                Thread.sleep((int)(MSPerFrame - DeltaTime));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        Time.Update(true);
 
         // change background color by incrementing HSV Colour Hues
-        HSVHue[0] += (.1f * DeltaTime);
-        HSVHue[1] += (.1f * DeltaTime);
+        HSVHue[0] += (float) (85 * Time.GetDeltaTime(Timing.TimeUnits.S));
+        HSVHue[1] += (float) (85 * Time.GetDeltaTime(Timing.TimeUnits.S));
         if (HSVHue[0] >= 360) {
             HSVHue[0] = 0;
         } if (HSVHue[1] >= 360) {
@@ -86,13 +69,11 @@ public class Canvas extends JComponent {
         g2.setPaint(BackGroundPaint);
         g2.fillRect(0,0, ScreenDimensions[ScreenX], ScreenDimensions[ScreenY]);
 
+        TextElement FPSCounter = new TextElement(new Vector2<>(30, 30), new Font("Arial", Font.BOLD, 20), "FPS: " + Time.GetRealFPS());
+        FPSCounter.Draw(g, Color.WHITE);
 
-        g2.setColor(Color.white);
-        g2.drawString("FPS: " + RealFPS, 10, 10);
-
-
-        // done with this paint
-        repaint(); // repaint
+        // done with this draw cycle
+        repaint(); // re-draw
     }
 
 
