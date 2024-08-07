@@ -1,10 +1,9 @@
 package me.oscarcusick.main.Engine;
 
-import java.sql.Time;
-
-// delta time shit
-// DeltaTime is the difference in time between frames, measured in milliseconds compared to Unity's seconds.
-// To make graphics or anything change at a static rate, independent of FPS, multiply the change by DeltaTime, it will move quicker but just change it by less
+/**
+ * A Class That Calculates The Difference In Time Between Frames, FPS, And Can Lock FPS To A Desired Value.
+ * Incredibly Useful For Makeing Moving Graphics Function The Same Independent Of Frame Rate And Machine Performance
+ */
 public class Timing {
 
     public enum TimeUnits {

@@ -54,5 +54,9 @@ public class Main {
         //window.setIconImage(Toolkit.getDefaultToolkit().getImage(IconImageDirectory + "Calculator_Icon.png"));
         // set visible
         window.setVisible(true);
+
+        //for (Font F : GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts()) {
+        //    System.out.println(F.getFontName());
+        //}
     }
 }

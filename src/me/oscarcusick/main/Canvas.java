@@ -1,22 +1,13 @@
 package me.oscarcusick.main;
 
-import me.oscarcusick.main.DrawElements.TextElement;
+import me.oscarcusick.main.DrawElements.VisualOnlyElements.TextBox;
+import me.oscarcusick.main.DrawElements.VisualOnlyElements.TextElement;
 import me.oscarcusick.main.Engine.Timing;
 import me.oscarcusick.main.Math.Vector2;
-import org.w3c.dom.Text;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
-import java.io.File;
-import java.io.IOException;
-import java.lang.management.GarbageCollectorMXBean;
-import java.time.Clock;
-import java.util.HashMap;
-import java.util.Timer;
-import java.util.concurrent.Delayed;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 
 public class Canvas extends JComponent {
 
@@ -69,8 +60,12 @@ public class Canvas extends JComponent {
         g2.setPaint(BackGroundPaint);
         g2.fillRect(0,0, ScreenDimensions[ScreenX], ScreenDimensions[ScreenY]);
 
-        TextElement FPSCounter = new TextElement(new Vector2<>(30, 30), new Font("Arial", Font.BOLD, 20), "FPS: " + Time.GetRealFPS());
-        FPSCounter.Draw(g, Color.WHITE);
+        TextElement FPSCounter = new TextElement(g, new Vector2<>(30, 30), new Font("Cascadia Code Regular", Font.BOLD, 20), "FPS: " + Time.GetRealFPS(), Color.white);
+        FPSCounter.Draw();
+
+        TextBox TB = new TextBox(g, new Vector2<>(150, 150), new Vector2<>(30, 10));
+        TB.SetTextContent("THIS IS A REALLY LONG TEST VECTOR STRING SO THE TEXT WILL ATTEMPT TO WRAP MULTIPLE TIMES");
+        //TB.Draw();
 
         // done with this draw cycle
         repaint(); // re-draw
