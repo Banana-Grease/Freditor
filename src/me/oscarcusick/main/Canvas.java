@@ -63,9 +63,12 @@ public class Canvas extends JComponent {
         TextElement FPSCounter = new TextElement(g, new Vector2<>(30, 30), new Font("Cascadia Code Regular", Font.BOLD, 20), "FPS: " + Time.GetRealFPS(), Color.white);
         FPSCounter.Draw();
 
-        TextBox TB = new TextBox(g, new Vector2<>(150, 150), new Vector2<>(30, 10));
-        TB.SetTextContent("THIS IS A REALLY LONG TEST VECTOR STRING SO THE TEXT WILL ATTEMPT TO WRAP MULTIPLE TIMES");
-        //TB.Draw();
+        TextBox TB = new TextBox(g, new Vector2<>(150, 150), new Vector2<>(50, 50));
+        TB.SetTextContent("Test String AND MORE TEXT SO IT SPLITS");
+        g2.setColor(Color.white);
+        TB.Draw();
+
+        //System.out.println(g2.getFontMetrics().getHeight());
 
         // done with this draw cycle
         repaint(); // re-draw
