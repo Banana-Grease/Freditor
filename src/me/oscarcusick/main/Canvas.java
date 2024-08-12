@@ -64,7 +64,7 @@ public class Canvas extends JComponent {
         FPSCounter.Draw();
 
         TextBox TB = new TextBox(g, new Vector2<>(50, 50), new Vector2<>(300, 300));
-        TB.SetTextContent(new String("There is no feasable way a bee should be able to fly anmd asdf lol asfgw"));
+        TB.SetTextContent(new String("There is no feasable way a bee should be able to fly anmd asdf lol asfgw wejnsd sdgkg asfasdf  ff"));
         g2.setColor(Color.white);
         TB.SetDrawOutSideDimensions(true);
         TB.Draw();

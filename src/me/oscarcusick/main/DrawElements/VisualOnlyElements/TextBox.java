@@ -37,12 +37,14 @@ public class TextBox extends TextElement {
             int SplitIndex = 0, FromIndex;
 
             int CurrentTextLineWidth = 0;
-            for (int i = 1; i < super.Text.length(); i++) {
+            for (int i = 1; i < super.Text.length() + 1; i++) {
                 CurrentTextLineWidth += G.getFontMetrics(super.DrawFont).charWidth(super.Text.charAt(i - 1));
 
                 // check to see if the width is now wider than the text box is wide
+                // WILL NOT ADD THE LAST STRING FOR THE TEXT WRAP IF ITS LESS THAT DIMENSIONS X
                 if (CurrentTextLineWidth >= Dimensions.GetValue(Vector2.Dimensions.X)) {
                     CurrentTextLineWidth = 0;
+
 
                     DrawStrings.add( super.Text.substring(SplitIndex, super.Text.indexOf(" ", i)));
 
@@ -56,7 +58,12 @@ public class TextBox extends TextElement {
 
                     //From index should be the total sum of all the strings in draw strings
                     SplitIndex = super.Text.indexOf(' ', FromIndex);
+                    continue; // don't check the next condition in the loop
                 }
+                // if the last 'wrap-string' is smaller than the x-axis, we get it here
+                //else if (i == super.Text.length()){
+                //    DrawStrings.add( super.Text.substring(SplitIndex, i)); // here
+                //}
             }
 
             // if the DrawStrings is still empty add the original text
