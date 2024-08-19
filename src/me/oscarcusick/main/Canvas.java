@@ -1,7 +1,7 @@
 package me.oscarcusick.main;
 
-import me.oscarcusick.main.Engine.DrawElements.VisualOnlyElements.TextBox;
-import me.oscarcusick.main.Engine.DrawElements.VisualOnlyElements.TextElement;
+import me.oscarcusick.main.Engine.Elements.VisualElements.TextBox;
+import me.oscarcusick.main.Engine.Elements.VisualElements.TextElement;
 import me.oscarcusick.main.Engine.Timing;
 import me.oscarcusick.main.Math.Vector2;
 
