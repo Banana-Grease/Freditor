@@ -1,32 +1,43 @@
-package me.oscarcusick.main.DrawElements.VisualOnlyElements;
+package me.oscarcusick.main.Engine.DrawElements.VisualOnlyElements;
 
 import me.oscarcusick.main.Math.Vector2;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
 
 public class TextBox extends TextElement {
 
-    Vector2<Integer> Dimensions;
-    boolean DoTextWrap = true, DoDrawOutSideDimensions = true;
+    private Graphics2D G2;
 
-    public TextBox(Graphics G, Vector2<Integer> OriginPoint, Vector2<Integer> Dimensions) {
-        super(G, OriginPoint, new Font("Cascadia Code Regular", Font.BOLD, 20), "", Color.white); // slap in some default values that there will be methods to change
-        this.G = G;
+    Vector2<Integer> Dimensions;
+    private boolean DoTextWrap = true, DoDrawOutSideDimensions = false;
+
+    // weather to draw the 'literal bounding box' lol
+    private boolean DrawBoundingBox = false;
+    private Color BoundingBoxColour = new Color(0, 0, 0, 127);
+
+
+    public TextBox(Graphics2D G2, Vector2<Integer> OriginPoint, Vector2<Integer> Dimensions) {
+        super(G2, OriginPoint, new Font("Cascadia Code Regular", Font.BOLD, 20), "", Color.white); // slap in some default values that there will be methods to change
+        this.G2 = G2;
         this.Dimensions = Dimensions;
     }
 
+    private int ReCalculateFromIndex(ArrayList<String> DrawStrings) {
+        int FromIndex = 0;
+        for (String Str : DrawStrings) {
+            FromIndex += Str.length();
+        }
+        return FromIndex;
+    }
+
+    // this entire function is messy due to the fact there were many bugs. it is now in a 'functional' state.
+    // if more work needs to be done to this class i will re-factor this function and take a lot of the code and put it into separate methods for later
+    // maybe ill add padding, idk
     @Override
     public void Draw() {
         // if text wrapping all the split lines will be separate strings in here
         ArrayList<String> DrawStrings = new ArrayList<>();
-
-
-        { // draw the bounds pf tje box first for debug lmfao
-            G.drawRect(super.OriginPoint.GetValue(Vector2.Dimensions.X), super.OriginPoint.GetValue(Vector2.Dimensions.Y), Dimensions.GetValue(Vector2.Dimensions.X), Dimensions.GetValue(Vector2.Dimensions.Y));
-        }
 
         // make sure it ends in space for proper splitting
         if (!super.Text.endsWith(" ")) {
@@ -48,22 +59,41 @@ public class TextBox extends TextElement {
 
                     DrawStrings.add( super.Text.substring(SplitIndex, super.Text.indexOf(" ", i)));
 
-                    FromIndex = 0;
-                    for (String Str : DrawStrings) {
-                        FromIndex += Str.length();
-                    }
+                    FromIndex = ReCalculateFromIndex(DrawStrings);
 
                     // trim space characters off the start and end
                     DrawStrings.set(DrawStrings.size() - 1, DrawStrings.get(DrawStrings.size() - 1).trim());
+
+                    // once we have split the text, it still may be longer than the width of the box.
+                    // we now need to remove the last word if that is the case
+                    {
+                        int CurrentStringSize = 0;
+
+                        for (char c : DrawStrings.get(DrawStrings.size() - 1).toCharArray()) {
+                            CurrentStringSize += G.getFontMetrics(super.DrawFont).charWidth(c);
+                        }
+
+                        // if the string is outside the box, we need to remove it and add it to the next line
+                        if (CurrentStringSize > Dimensions.GetValue(Vector2.Dimensions.X)) {
+                            // remove the last word
+                            DrawStrings.set(DrawStrings.size() - 1, DrawStrings.get(DrawStrings.size() - 1).substring(0, DrawStrings.get(DrawStrings.size() - 1).lastIndexOf(' ')));
+
+                            // add the word to the next line
+                            // we do this by re-calculating where to start the text wrap
+                            FromIndex = ReCalculateFromIndex(DrawStrings);
+                        }
+
+                    }
+
 
                     //From index should be the total sum of all the strings in draw strings
                     SplitIndex = super.Text.indexOf(' ', FromIndex);
                     continue; // don't check the next condition in the loop
                 }
                 // if the last 'wrap-string' is smaller than the x-axis, we get it here
-                //else if (i == super.Text.length()){
-                //    DrawStrings.add( super.Text.substring(SplitIndex, i)); // here
-                //}
+                else if (i == super.Text.length()){
+                    DrawStrings.add( super.Text.substring(SplitIndex, i).trim()); // here
+                }
             }
 
             // if the DrawStrings is still empty add the original text
@@ -87,6 +117,12 @@ public class TextBox extends TextElement {
             // will add text alignment code later, right now it all will be aligned to the left
             G.drawString(DrawStrings.get(i), super.OriginPoint.GetValue(Vector2.Dimensions.X), super.OriginPoint.GetValue(Vector2.Dimensions.Y) + (G.getFontMetrics().getHeight() * (i + 1)));
         }
+
+        if (DrawBoundingBox) {
+            G2.setColor(BoundingBoxColour);
+            G2.setStroke(new BasicStroke(2));
+            G2.drawRoundRect(super.OriginPoint.GetValue(Vector2.Dimensions.X), super.OriginPoint.GetValue(Vector2.Dimensions.Y), Dimensions.GetValue(Vector2.Dimensions.X), Dimensions.GetValue(Vector2.Dimensions.Y), 10, 10);
+        }
     }
 
     public void SetTextContent(String NewText) {
@@ -107,6 +143,14 @@ public class TextBox extends TextElement {
 
     public void SetDrawOutSideDimensions(boolean DoDrawOutSideDimensions) {
         this.DoDrawOutSideDimensions = DoDrawOutSideDimensions;
+    }
+
+    public void SetDrawBoundingBox(boolean DoDrawBoundingBox) {
+        this.DrawBoundingBox = DoDrawBoundingBox;
+    }
+
+    public void SetBoundingBoxColour(Color NewColour) {
+        this.BoundingBoxColour = NewColour;
     }
 
 }

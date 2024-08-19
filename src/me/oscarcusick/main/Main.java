@@ -1,5 +1,7 @@
 package me.oscarcusick.main;
 
+import me.oscarcusick.main.Engine.DataTypes.Identification;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -58,6 +60,9 @@ public class Main {
         //for (Font F : GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts()) {
         //    System.out.println(F.getFontName());
         //}
+
+        Identification ID = new Identification();
+        ID.setIDNumber("asdas");
 
     }
 }

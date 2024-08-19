@@ -1,4 +1,4 @@
-package me.oscarcusick.main.DrawElements.VisualOnlyElements;
+package me.oscarcusick.main.Engine.DrawElements.VisualOnlyElements;
 
 import me.oscarcusick.main.Math.Vector2;
 

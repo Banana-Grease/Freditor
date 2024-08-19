@@ -1,7 +1,7 @@
 package me.oscarcusick.main;
 
-import me.oscarcusick.main.DrawElements.VisualOnlyElements.TextBox;
-import me.oscarcusick.main.DrawElements.VisualOnlyElements.TextElement;
+import me.oscarcusick.main.Engine.DrawElements.VisualOnlyElements.TextBox;
+import me.oscarcusick.main.Engine.DrawElements.VisualOnlyElements.TextElement;
 import me.oscarcusick.main.Engine.Timing;
 import me.oscarcusick.main.Math.Vector2;
 
@@ -63,14 +63,14 @@ public class Canvas extends JComponent {
         TextElement FPSCounter = new TextElement(g, new Vector2<>(30, 30), new Font("Cascadia Code Regular", Font.BOLD, 20), "FPS: " + Time.GetRealFPS(), Color.white);
         FPSCounter.Draw();
 
-        TextBox TB = new TextBox(g, new Vector2<>(50, 50), new Vector2<>(300, 300));
-        TB.SetTextContent(new String("There is no feasable way a bee should be able to fly anmd asdf lol asfgw wejnsd sdgkg asfasdf  ff"));
+        TextBox TB = new TextBox(g2, new Vector2<>(50, 50), new Vector2<>(300, 150));
+        TB.SetTextContent("I reeally like men and i wanna order a penis off of hungry shmucnger penis eater dfelivery");
         g2.setColor(Color.white);
         TB.SetDrawOutSideDimensions(true);
+        TB.SetDrawBoundingBox(true);
         TB.Draw();
 
         //System.out.println(g2.getFontMetrics().getHeight());
-
         // done with this draw cycle
         repaint(); // re-draw
     }
