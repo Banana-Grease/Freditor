@@ -1,7 +1,9 @@
 package me.oscarcusick.main;
 
+import me.oscarcusick.main.Engine.ElementRegistry;
 import me.oscarcusick.main.Engine.Elements.VisualElements.TextBox;
 import me.oscarcusick.main.Engine.Elements.VisualElements.TextElement;
+import me.oscarcusick.main.Engine.Elements.InteractiveElements.Button;
 import me.oscarcusick.main.Engine.Timing;
 import me.oscarcusick.main.Math.Vector2;
 
@@ -15,10 +17,11 @@ public class Canvas extends JComponent {
     int[] ScreenDimensions = new int[2]; // to store size of window when initializing
 
 
+    ElementRegistry ER = new ElementRegistry();
+
 
     // background hue for GayGB
     float[] HSVHue = {0 , 30};
-
 
 
     // Colour Calculation Class / instantiate ColourHelper
@@ -35,10 +38,17 @@ public class Canvas extends JComponent {
 
         this.IH = IH;
         this.Time = new Timing(60);
+
+        ER.RegisterNewElement(ElementRegistry.ElementTypes.Button, new Button(new Vector2<Integer>(70, 70), new Vector2<Integer>(200, 200), "Example Button Name"));
     }
 
     public void paint(Graphics g) { // main paint loop
+        // Graphics Interface Setup
+        Graphics2D g2 = (Graphics2D) g; // extend Graphics to Graphics2D to enable more methods
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
         Time.Update(true);
+        ER.ElementCheck();
 
         // change background color by incrementing HSV Colour Hues
         HSVHue[0] += (float) (85 * Time.GetDeltaTime(Timing.TimeUnits.S));
@@ -49,26 +59,17 @@ public class Canvas extends JComponent {
             HSVHue[1] = 0;
         }
 
-        // Graphics Interface Setup
-        Graphics2D g2 = (Graphics2D) g; // extend Graphics to Graphics2D to enable more methods
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
         // Start Render Cycle
-
         // draw GayGB background
         GradientPaint BackGroundPaint = new GradientPaint(new Point2D.Float((int)(ScreenDimensions[ScreenX] / 3), (int)(ScreenDimensions[ScreenY] / 3)), CH.transformHSVtoRGB((int)HSVHue[0], 1, 1), new Point2D.Float((int)((ScreenDimensions[ScreenX] / 3) * 2), (int)((ScreenDimensions[ScreenY] / 3) * 2)), CH.transformHSVtoRGB((int)HSVHue[1], 1, 1));
         g2.setPaint(BackGroundPaint);
         g2.fillRect(0,0, ScreenDimensions[ScreenX], ScreenDimensions[ScreenY]);
 
-        TextElement FPSCounter = new TextElement(g, new Vector2<>(30, 30), new Font("Cascadia Code Regular", Font.BOLD, 20), "FPS: " + Time.GetRealFPS(), Color.white);
+
+        TextElement FPSCounter = new TextElement(g, new Vector2<>(5, 15), new Font("Cascadia Code Regular", Font.BOLD, 15), "FPS: " + Time.GetRealFPS(), Color.white);
         FPSCounter.Draw();
 
-        TextBox TB = new TextBox(g2, new Vector2<>(50, 50), new Vector2<>(300, 150));
-        TB.SetTextContent("I reeally like men and i wanna order a penis off of hungry shmucnger penis eater dfelivery");
-        g2.setColor(Color.white);
-        TB.SetDrawOutSideDimensions(true);
-        TB.SetDrawBoundingBox(true);
-        TB.Draw();
+        ER.ElementDraw(g2);
 
         //System.out.println(g2.getFontMetrics().getHeight());
         // done with this draw cycle
