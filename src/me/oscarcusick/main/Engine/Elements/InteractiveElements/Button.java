@@ -7,6 +7,7 @@ import me.oscarcusick.main.Math.Vector2;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.security.NoSuchAlgorithmException;
+import java.util.Set;
 
 public class Button {
     // constants
@@ -126,6 +127,13 @@ public class Button {
         return new Vector2<Integer>(
                 (int)(Dimensions.GetValue(Vector2.Dimensions.X) * BorderFactor),
                 (int)(Dimensions.GetValue(Vector2.Dimensions.Y) * BorderFactor));
+    }
+
+    public void SetPressedState(boolean SetPressedTrue) {
+        IsPressed = SetPressedTrue;
+    }
+    public boolean GetPressedState() {
+        return IsPressed;
     }
 
 

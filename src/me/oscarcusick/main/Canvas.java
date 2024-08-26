@@ -5,6 +5,7 @@ import me.oscarcusick.main.Engine.Elements.VisualElements.TextBox;
 import me.oscarcusick.main.Engine.Elements.VisualElements.TextElement;
 import me.oscarcusick.main.Engine.Elements.InteractiveElements.Button;
 import me.oscarcusick.main.Engine.Timing;
+import me.oscarcusick.main.Engine.UserInput.InteractionHandler;
 import me.oscarcusick.main.Math.Vector2;
 
 import java.awt.*;
@@ -32,14 +33,15 @@ public class Canvas extends JComponent {
     InteractionHandler IH;
     Timing Time;
 
-    public Canvas(int WindowSizeX, int WindowSizeY, InteractionHandler IH) {
+    public Canvas(int WindowSizeX, int WindowSizeY, InteractionHandler IH, ElementRegistry ER) {
         ScreenDimensions[ScreenX] = WindowSizeX;
         ScreenDimensions[ScreenY] = WindowSizeY;
 
         this.IH = IH;
         this.Time = new Timing(60);
+        this.ER = ER;
 
-        ER.RegisterNewElement(ElementRegistry.ElementTypes.Button, new Button(new Vector2<Integer>(70, 70), new Vector2<Integer>(200, 200), "Example Button Name"));
+        ER.RegisterNewElement(ElementRegistry.ElementTypes.Button, new Button(new Vector2<Integer>(70, 70), new Vector2<Integer>(100, 100), "Example Button Name"));
     }
 
     public void paint(Graphics g) { // main paint loop
@@ -47,8 +49,8 @@ public class Canvas extends JComponent {
         Graphics2D g2 = (Graphics2D) g; // extend Graphics to Graphics2D to enable more methods
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        Time.Update(true);
-        ER.ElementCheck();
+        Time.Update();
+        ER.ElementCheck(IH);
 
         // change background color by incrementing HSV Colour Hues
         HSVHue[0] += (float) (85 * Time.GetDeltaTime(Timing.TimeUnits.S));
@@ -66,10 +68,19 @@ public class Canvas extends JComponent {
         g2.fillRect(0,0, ScreenDimensions[ScreenX], ScreenDimensions[ScreenY]);
 
 
-        TextElement FPSCounter = new TextElement(g, new Vector2<>(5, 15), new Font("Cascadia Code Regular", Font.BOLD, 15), "FPS: " + Time.GetRealFPS(), Color.white);
+        g2.setColor(Color.white);
+        TextBox FPSCounter = new TextBox(g2, new Vector2<>(10, 10), new Vector2<>(100, 40));
+        FPSCounter.SetDrawBoundingBox(true);
+        FPSCounter.SetTextWrap(false);
+        FPSCounter.SetTextContent("FPS: " + (float)Time.GetRealFPS());
+        FPSCounter.SetFont(new Font(FPSCounter.DrawFont.getFontName(), Font.BOLD, 35));
         FPSCounter.Draw();
 
         ER.ElementDraw(g2);
+
+        g2.setColor(Color.red);
+        g2.fillRect(152, 152, 2, 2);
+        g2.fillRect(82, 82, 2, 2);
 
         //System.out.println(g2.getFontMetrics().getHeight());
         // done with this draw cycle

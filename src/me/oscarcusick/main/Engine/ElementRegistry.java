@@ -1,6 +1,8 @@
 package me.oscarcusick.main.Engine;
 
 import me.oscarcusick.main.Engine.Elements.InteractiveElements.Button;
+import me.oscarcusick.main.Engine.UserInput.InteractionHandler;
+import me.oscarcusick.main.Math.Vector2;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -29,8 +31,23 @@ public class ElementRegistry {
      * used to handle inputs for all the registered buttons
      * must be called once per program loop
      */
-    public void ElementCheck() {
+    public void ElementCheck(InteractionHandler GlobalInteractionHandler) {
+        for (Button B : ButtonList) {
+            // if there has been a NEW mouse event, seach all the buttons
+            if (GlobalInteractionHandler.MouseEventsHaveUpdated) {
+                // if there is a mouse event where the mouse has clicked within a button's area, reset the mouse event flag and update button state
+                if ((GlobalInteractionHandler.PreviousMouseEvents[0].getPoint().x > B.GetAdjustedOrigin().GetValue(Vector2.Dimensions.X) && GlobalInteractionHandler.PreviousMouseEvents[0].getPoint().x < (B.GetAdjustedOrigin().GetValue(Vector2.Dimensions.X) + B.GetAdjustedDimensions().GetValue(Vector2.Dimensions.X))) && (GlobalInteractionHandler.PreviousMouseEvents[0].getPoint().y > B.GetAdjustedOrigin().GetValue(Vector2.Dimensions.Y) && GlobalInteractionHandler.PreviousMouseEvents[0].getPoint().y < (B.GetAdjustedOrigin().GetValue(Vector2.Dimensions.Y) + B.GetAdjustedDimensions().GetValue(Vector2.Dimensions.Y)))) { // condense both if statements into the one
+                    B.SetPressedState(!B.GetPressedState());
+                    GlobalInteractionHandler.MouseEventsHaveUpdated = false; // set back to false to avoid registering the same click twice
+                }
 
+                // debug
+                System.out.println("X: " + (GlobalInteractionHandler.PreviousMouseEvents[0].getPoint().x) + ", Y: " + (GlobalInteractionHandler.PreviousMouseEvents[0].getPoint().y));
+                System.out.println((B.GetAdjustedOrigin().GetValue(Vector2.Dimensions.Y) + B.GetAdjustedDimensions().GetValue(Vector2.Dimensions.Y)));
+                GlobalInteractionHandler.MouseEventsHaveUpdated = false;
+
+            }
+        }
     }
 
     public <T> void RegisterNewElement(ElementTypes ElementType, T Element) {
