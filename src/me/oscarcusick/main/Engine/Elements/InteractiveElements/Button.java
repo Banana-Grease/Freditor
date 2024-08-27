@@ -1,6 +1,7 @@
 package me.oscarcusick.main.Engine.Elements.InteractiveElements;
 
 import me.oscarcusick.main.Engine.DataTypes.Identification;
+import me.oscarcusick.main.Engine.Elements.VisualElements.TextBox;
 import me.oscarcusick.main.Engine.Utility.GeneralUtility;
 import me.oscarcusick.main.Math.Vector2;
 
@@ -101,9 +102,20 @@ public class Button {
                 (int)(Dimensions.GetValue(Vector2.Dimensions.X) * RoundingFactor), // rounding x
                 (int)(Dimensions.GetValue(Vector2.Dimensions.Y) * RoundingFactor)); // rounding y
 
+        // set the color for label
+        if (this.IsPressed) {
+            G.setColor(Color.white);
+        }
+        else {
+            G.setColor(Color.black);
+        }
         // draw the label
-
-
+        TextBox LabelBox = new TextBox(G, new Vector2<>(OriginX, OriginY), this.GetAdjustedDimensions());
+        LabelBox.SetTextContent(DrawLabel);
+        LabelBox.SetTextWrap(false);
+        LabelBox.SetDrawCenteringType(TextBox.CenteringTypes.Center);
+        LabelBox.SetDrawOutSideDimensions(true);
+        LabelBox.Draw();
 
     }
 
@@ -134,6 +146,13 @@ public class Button {
     }
     public boolean GetPressedState() {
         return IsPressed;
+    }
+
+    public void SetButtonLabel(String NewButtonLabel) {
+        this.DrawLabel = NewButtonLabel;
+    }
+    public String GetButtonLabel() {
+        return this.DrawLabel;
     }
 
 

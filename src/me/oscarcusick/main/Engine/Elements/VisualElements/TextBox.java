@@ -9,8 +9,14 @@ public class TextBox extends TextElement {
 
     private Graphics2D G2;
 
+    public enum CenteringTypes {
+        Left,
+        Center
+    }
+
     Vector2<Integer> Dimensions;
     private boolean DoTextWrap = true, DoDrawOutSideDimensions = false;
+    private int DrawCenteringType = CenteringTypes.Left.ordinal();
 
     // weather to draw the 'literal bounding box' lol
     private boolean DrawBoundingBox = false;
@@ -31,11 +37,22 @@ public class TextBox extends TextElement {
         return FromIndex;
     }
 
+    private int GetStringWidth(Font Font, String String) {
+        int ReturnValue = 0;
+        for (char C : String.toCharArray()) {
+            ReturnValue += G.getFontMetrics(Font).charWidth(C);
+        }
+        return ReturnValue;
+    }
+
     // this entire function is messy due to the fact there were many bugs. it is now in a 'functional' state.
     // if more work needs to be done to this class i will re-factor this function and take a lot of the code and put it into separate methods for later
     // maybe ill add padding, idk
     @Override
     public void Draw() {
+        // set font to DrawFont
+        G2.setFont(DrawFont);
+
         // if text wrapping all the split lines will be separate strings in here
         ArrayList<String> DrawStrings = new ArrayList<>();
 
@@ -114,8 +131,19 @@ public class TextBox extends TextElement {
                 break; // done drawing
             }
 
-            // will add text alignment code later, right now it all will be aligned to the left
-            G.drawString(DrawStrings.get(i), super.OriginPoint.GetValue(Vector2.Dimensions.X), super.OriginPoint.GetValue(Vector2.Dimensions.Y) + (G.getFontMetrics().getHeight() * (i + 1)));
+            if (this.DrawCenteringType == CenteringTypes.Left.ordinal()) {
+                G.drawString(DrawStrings.get(i), super.OriginPoint.GetValue(Vector2.Dimensions.X), super.OriginPoint.GetValue(Vector2.Dimensions.Y) + (G.getFontMetrics().getHeight() * (i + 1)));
+            }
+
+            else if (this.DrawCenteringType == CenteringTypes.Center.ordinal()) {
+                // get string width
+                int CurrentWidth = GetStringWidth(this.DrawFont, DrawStrings.get(i));
+
+                // get where to start drawing
+                int XDrawPos = (this.OriginPoint.GetValue(Vector2.Dimensions.X) + (((this.Dimensions.GetValue(Vector2.Dimensions.X) - CurrentWidth )/ 2)));
+
+                G.drawString(DrawStrings.get(i), XDrawPos, super.OriginPoint.GetValue(Vector2.Dimensions.Y) + (G.getFontMetrics().getHeight() * (i + 1)));
+            }
         }
 
         if (DrawBoundingBox) {
@@ -151,6 +179,20 @@ public class TextBox extends TextElement {
 
     public void SetBoundingBoxColour(Color NewColour) {
         this.BoundingBoxColour = NewColour;
+    }
+
+    public void SetDrawCenteringType(CenteringTypes NewCenteringType) {
+        this.DrawCenteringType = NewCenteringType.ordinal();
+    }
+    public CenteringTypes GetDrawCenteringType() {
+        switch (DrawCenteringType) {
+            case 0:
+                return CenteringTypes.Left;
+            case 1:
+                return CenteringTypes.Center;
+            default:
+                return CenteringTypes.Left;
+        }
     }
 
 }

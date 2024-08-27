@@ -2,6 +2,7 @@ package me.oscarcusick.main.Engine;
 
 import me.oscarcusick.main.Engine.Elements.InteractiveElements.Button;
 import me.oscarcusick.main.Engine.UserInput.InteractionHandler;
+import me.oscarcusick.main.Engine.Utility.GeneralUtility;
 import me.oscarcusick.main.Math.Vector2;
 
 import java.awt.*;
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 // this is a class that should be used to 'register' interactive elements
 // such as buttons. these will be stored in a list then this class will handle the user input or whatever
 public class ElementRegistry {
+
+    GeneralUtility GU = new GeneralUtility();
 
     public enum ElementTypes {
         Button
@@ -36,16 +39,10 @@ public class ElementRegistry {
             // if there has been a NEW mouse event, seach all the buttons
             if (GlobalInteractionHandler.MouseEventsHaveUpdated) {
                 // if there is a mouse event where the mouse has clicked within a button's area, reset the mouse event flag and update button state
-                if ((GlobalInteractionHandler.PreviousMouseEvents[0].getPoint().x > B.GetAdjustedOrigin().GetValue(Vector2.Dimensions.X) && GlobalInteractionHandler.PreviousMouseEvents[0].getPoint().x < (B.GetAdjustedOrigin().GetValue(Vector2.Dimensions.X) + B.GetAdjustedDimensions().GetValue(Vector2.Dimensions.X))) && (GlobalInteractionHandler.PreviousMouseEvents[0].getPoint().y > B.GetAdjustedOrigin().GetValue(Vector2.Dimensions.Y) && GlobalInteractionHandler.PreviousMouseEvents[0].getPoint().y < (B.GetAdjustedOrigin().GetValue(Vector2.Dimensions.Y) + B.GetAdjustedDimensions().GetValue(Vector2.Dimensions.Y)))) { // condense both if statements into the one
+                if (GU.IsWithinArea(new Vector2<Integer>((int) GlobalInteractionHandler.PreviousMouseEvents[0].getPoint().getX(), (int) GlobalInteractionHandler.PreviousMouseEvents[0].getPoint().getY()), B.GetAdjustedOrigin(), B.GetAdjustedDimensions(), true)) {
                     B.SetPressedState(!B.GetPressedState());
-                    GlobalInteractionHandler.MouseEventsHaveUpdated = false; // set back to false to avoid registering the same click twice
+                    GlobalInteractionHandler.MouseEventsHaveUpdated = false; // set back too false to avoid registering the same click twice
                 }
-
-                // debug
-                System.out.println("X: " + (GlobalInteractionHandler.PreviousMouseEvents[0].getPoint().x) + ", Y: " + (GlobalInteractionHandler.PreviousMouseEvents[0].getPoint().y));
-                System.out.println((B.GetAdjustedOrigin().GetValue(Vector2.Dimensions.Y) + B.GetAdjustedDimensions().GetValue(Vector2.Dimensions.Y)));
-                GlobalInteractionHandler.MouseEventsHaveUpdated = false;
-
             }
         }
     }

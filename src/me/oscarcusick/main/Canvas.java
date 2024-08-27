@@ -2,10 +2,10 @@ package me.oscarcusick.main;
 
 import me.oscarcusick.main.Engine.ElementRegistry;
 import me.oscarcusick.main.Engine.Elements.VisualElements.TextBox;
-import me.oscarcusick.main.Engine.Elements.VisualElements.TextElement;
 import me.oscarcusick.main.Engine.Elements.InteractiveElements.Button;
 import me.oscarcusick.main.Engine.Timing;
 import me.oscarcusick.main.Engine.UserInput.InteractionHandler;
+import me.oscarcusick.main.Engine.Utility.ColourHelper;
 import me.oscarcusick.main.Math.Vector2;
 
 import java.awt.*;
@@ -41,7 +41,7 @@ public class Canvas extends JComponent {
         this.Time = new Timing(60);
         this.ER = ER;
 
-        ER.RegisterNewElement(ElementRegistry.ElementTypes.Button, new Button(new Vector2<Integer>(70, 70), new Vector2<Integer>(100, 100), "Example Button Name"));
+        ER.RegisterNewElement(ElementRegistry.ElementTypes.Button, new Button(new Vector2<Integer>(70, 70), new Vector2<Integer>(100, 100), "Bold"));
     }
 
     public void paint(Graphics g) { // main paint loop
@@ -69,11 +69,12 @@ public class Canvas extends JComponent {
 
 
         g2.setColor(Color.white);
-        TextBox FPSCounter = new TextBox(g2, new Vector2<>(10, 10), new Vector2<>(100, 40));
-        FPSCounter.SetDrawBoundingBox(true);
+        TextBox FPSCounter = new TextBox(g2, new Vector2<>(10, 405), new Vector2<>(150, 25));
         FPSCounter.SetTextWrap(false);
-        FPSCounter.SetTextContent("FPS: " + (float)Time.GetRealFPS());
-        FPSCounter.SetFont(new Font(FPSCounter.DrawFont.getFontName(), Font.BOLD, 35));
+        FPSCounter.SetTextContent("FPS: " + (int)Time.GetRealFPS());
+        FPSCounter.SetFont(new Font("Cascadia Code Regular", Font.BOLD, 15));
+        FPSCounter.SetDrawCenteringType(TextBox.CenteringTypes.Center);
+        FPSCounter.SetDrawBoundingBox(true);
         FPSCounter.Draw();
 
         ER.ElementDraw(g2);
