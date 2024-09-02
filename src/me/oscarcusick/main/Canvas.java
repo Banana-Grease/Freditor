@@ -1,5 +1,7 @@
 package me.oscarcusick.main;
 
+import me.oscarcusick.main.Engine.DataTypes.AdvancedCharacter;
+import me.oscarcusick.main.Engine.DataTypes.AdvancedString;
 import me.oscarcusick.main.Engine.ElementRegistry;
 import me.oscarcusick.main.Engine.Elements.VisualElements.TextBox;
 import me.oscarcusick.main.Engine.Elements.InteractiveElements.Button;
@@ -10,6 +12,7 @@ import me.oscarcusick.main.Math.Vector2;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import javax.swing.JComponent;
 
 public class Canvas extends JComponent {
@@ -85,7 +88,22 @@ public class Canvas extends JComponent {
 
         //System.out.println(g2.getFontMetrics().getHeight());
         // done with this draw cycle
-        repaint(); // re-draw
+        //repaint(); // re-draw
+
+
+        AdvancedString AdvStr = new AdvancedString(new ArrayList<AdvancedCharacter>());
+
+        AdvStr.AddCharacter(new AdvancedCharacter(g2, 'a'));
+        AdvStr.AddCharacter(new AdvancedCharacter(g2, 'b'));
+        AdvStr.AddCharacter(new AdvancedCharacter(g2, 'c'));
+        AdvStr.AddCharacter(new AdvancedCharacter(g2, 'd'));
+        AdvStr.AddCharacter(new AdvancedCharacter(g2, 'e'));
+        AdvStr.AddCharacter(new AdvancedCharacter(g2, 'f'));
+
+        System.out.println(AdvStr.IndexOf("cu"));
+
+
+
     }
 
 
