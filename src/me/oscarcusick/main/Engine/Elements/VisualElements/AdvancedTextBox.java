@@ -45,14 +45,34 @@ public class AdvancedTextBox {
     private int GetDrawX(int TargetLine, int TargetCharacter) {
         int ReturnDrawX = 0;
 
-        for (AdvancedCharacter AdvC : AdvancedStringsData.get(TargetLine).GetRawData()) {
-            ReturnDrawX += AdvC.GetDimensions().GetValue(Vector2.Dimensions.X);
+        for (int i = 1; i < AdvancedStringsData.get(TargetLine).GetRawData().size() + 1; i++) {
+
+            if ( i > TargetCharacter)
+                return ReturnDrawX;
+
+            ReturnDrawX += AdvancedStringsData.get(TargetLine).GetRawData().get(i - 1).GetDimensions().GetValue(Vector2.Dimensions.X);
         }
 
         return ReturnDrawX;
     }
 
     public void Draw() {
+
+        // loop all characters on each line and calculate their X & Y Position
+        for (int i = 0; i < AdvancedStringsData.size(); i++) {
+            for (int y = 0; y < AdvancedStringsData.get(i).GetRawData().size(); y++) {
+                AdvancedStringsData.get(i).GetRawData().get(y).SetOriginPoint(new Vector2<Integer>(GetDrawX(i, y) + this.OriginPoint.GetValue(Vector2.Dimensions.X), GetDrawY(i) + this.OriginPoint.GetValue(Vector2.Dimensions.Y)));
+            }
+        }
+
+        G.setColor(Color.white);
+
+    for (AdvancedString AdvString : AdvancedStringsData) {
+        for (AdvancedCharacter AdvCharacter : AdvString.GetRawData()) {
+            AdvCharacter.Draw();
+            System.out.println("Drew '" + AdvCharacter.GetCharacter() + "' @Point: (" + AdvCharacter.GetOriginPoint().GetValue(Vector2.Dimensions.X) + ", " + AdvCharacter.GetOriginPoint().GetValue(Vector2.Dimensions.Y) + ")");
+        }
+    }
 
     }
 
@@ -68,6 +88,10 @@ public class AdvancedTextBox {
     }
     public void SetBoundingBoxColour(Color BoundingBoxColour) {
         this.BoundingBoxColour = BoundingBoxColour;
+    }
+
+    public void SetGraphics2D(Graphics2D NewGraphics2D) {
+        this.G = NewGraphics2D;
     }
 
     // -------------- Character and line Manipulation Below

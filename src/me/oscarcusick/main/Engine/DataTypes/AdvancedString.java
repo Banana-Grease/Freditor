@@ -5,7 +5,7 @@ import me.oscarcusick.main.Math.Vector2;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class AdvancedString {
+public class AdvancedString extends ArrayList<AdvancedString> {
 
     private ArrayList<AdvancedCharacter> AdvancedStringData;
 

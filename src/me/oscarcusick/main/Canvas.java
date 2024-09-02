@@ -3,6 +3,7 @@ package me.oscarcusick.main;
 import me.oscarcusick.main.Engine.DataTypes.AdvancedCharacter;
 import me.oscarcusick.main.Engine.DataTypes.AdvancedString;
 import me.oscarcusick.main.Engine.ElementRegistry;
+import me.oscarcusick.main.Engine.Elements.VisualElements.AdvancedTextBox;
 import me.oscarcusick.main.Engine.Elements.VisualElements.TextBox;
 import me.oscarcusick.main.Engine.Elements.InteractiveElements.Button;
 import me.oscarcusick.main.Engine.Timing;
@@ -36,6 +37,8 @@ public class Canvas extends JComponent {
     InteractionHandler IH;
     Timing Time;
 
+    AdvancedTextBox ATB = new AdvancedTextBox(new Vector2<Integer>(200, 200), new Vector2<Integer>(200, 200));
+
     public Canvas(int WindowSizeX, int WindowSizeY, InteractionHandler IH, ElementRegistry ER) {
         ScreenDimensions[ScreenX] = WindowSizeX;
         ScreenDimensions[ScreenY] = WindowSizeY;
@@ -45,6 +48,9 @@ public class Canvas extends JComponent {
         this.ER = ER;
 
         ER.RegisterNewElement(ElementRegistry.ElementTypes.Button, new Button(new Vector2<Integer>(70, 70), new Vector2<Integer>(100, 100), "Bold"));
+
+        ATB.AddNewLine(new AdvancedString(new ArrayList<>()));
+
     }
 
     public void paint(Graphics g) { // main paint loop
@@ -88,7 +94,27 @@ public class Canvas extends JComponent {
 
         //System.out.println(g2.getFontMetrics().getHeight());
         // done with this draw cycle
-        repaint(); // re-draw
+        //repaint(); // re-draw
+
+        ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'a'));
+        ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'b'));
+        ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'c'));
+        ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'd'));
+        ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'e'));
+        ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'f'));
+
+        ATB.AddNewLine(new AdvancedString(new ArrayList<>()));
+
+        ATB.AddCharacterToLine(1, new AdvancedCharacter(g2, 'g'));
+        ATB.AddCharacterToLine(1, new AdvancedCharacter(g2, 'h'));
+        ATB.AddCharacterToLine(1, new AdvancedCharacter(g2, 'i'));
+        ATB.AddCharacterToLine(1, new AdvancedCharacter(g2, 'j'));
+        ATB.AddCharacterToLine(1, new AdvancedCharacter(g2, 'k'));
+        ATB.AddCharacterToLine(1, new AdvancedCharacter(g2, 'l'));
+
+        ATB.SetGraphics2D(g2);
+
+        ATB.Draw();
     }
 
 

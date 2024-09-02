@@ -13,6 +13,9 @@ public class AdvancedCharacter {
     private char Character;
     private Font DisplayFont;
 
+    // this is optional to set, it just may make drawing characters easier
+    private Vector2<Integer> OriginPoint = null;
+
     private Graphics2D G;
 
     // updates the dimensions of the character for once it will be displayed
@@ -37,6 +40,10 @@ public class AdvancedCharacter {
         G.setFont(DisplayFont);
         G.drawString(String.valueOf(Character), OriginPoint.GetValue(Vector2.Dimensions.X), OriginPoint.GetValue(Vector2.Dimensions.Y));
     }
+    // draw overload to use its own origin point instead of custom one
+    public void Draw() {
+        Draw(this.OriginPoint);
+    }
 
     public char GetCharacter() {
         return this.Character;
@@ -56,5 +63,16 @@ public class AdvancedCharacter {
 
     public Vector2<Integer> GetDimensions() {
         return this.CharacterDimensions;
+    }
+
+    public Vector2<Integer> GetOriginPoint() {
+        return this.OriginPoint;
+    }
+    public void SetOriginPoint(Vector2<Integer> NewOriginPoint) {
+        this.OriginPoint = NewOriginPoint;
+    }
+
+    public void SetGraphics2D(Graphics2D NewGraphics2D) {
+        this.G = NewGraphics2D;
     }
 }
