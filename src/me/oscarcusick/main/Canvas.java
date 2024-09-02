@@ -88,22 +88,7 @@ public class Canvas extends JComponent {
 
         //System.out.println(g2.getFontMetrics().getHeight());
         // done with this draw cycle
-        //repaint(); // re-draw
-
-
-        AdvancedString AdvStr = new AdvancedString(new ArrayList<AdvancedCharacter>());
-
-        AdvStr.AddCharacter(new AdvancedCharacter(g2, 'a'));
-        AdvStr.AddCharacter(new AdvancedCharacter(g2, 'b'));
-        AdvStr.AddCharacter(new AdvancedCharacter(g2, 'c'));
-        AdvStr.AddCharacter(new AdvancedCharacter(g2, 'd'));
-        AdvStr.AddCharacter(new AdvancedCharacter(g2, 'e'));
-        AdvStr.AddCharacter(new AdvancedCharacter(g2, 'f'));
-
-        System.out.println(AdvStr.IndexOf("cu"));
-
-
-
+        repaint(); // re-draw
     }
 
 
