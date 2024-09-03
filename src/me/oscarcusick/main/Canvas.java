@@ -9,7 +9,7 @@ import me.oscarcusick.main.Engine.Elements.InteractiveElements.Button;
 import me.oscarcusick.main.Engine.Timing;
 import me.oscarcusick.main.Engine.UserInput.InteractionHandler;
 import me.oscarcusick.main.Engine.Utility.ColourHelper;
-import me.oscarcusick.main.Math.Vector2;
+import me.oscarcusick.main.Engine.Math.Vector2;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

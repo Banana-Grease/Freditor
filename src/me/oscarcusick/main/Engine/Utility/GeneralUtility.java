@@ -1,7 +1,7 @@
 package me.oscarcusick.main.Engine.Utility;
 
-import me.oscarcusick.main.Math.Vector2;
-import me.oscarcusick.main.Math.Vector2.Dimensions;
+import me.oscarcusick.main.Engine.Math.Vector2;
+import me.oscarcusick.main.Engine.Math.Vector2.Dimensions;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

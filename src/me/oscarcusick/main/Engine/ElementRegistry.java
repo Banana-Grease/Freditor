@@ -3,7 +3,7 @@ package me.oscarcusick.main.Engine;
 import me.oscarcusick.main.Engine.Elements.InteractiveElements.Button;
 import me.oscarcusick.main.Engine.UserInput.InteractionHandler;
 import me.oscarcusick.main.Engine.Utility.GeneralUtility;
-import me.oscarcusick.main.Math.Vector2;
+import me.oscarcusick.main.Engine.Math.Vector2;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class ElementRegistry {
      */
     public void ElementCheck(InteractionHandler GlobalInteractionHandler) {
         for (Button B : ButtonList) {
-            // if there has been a NEW mouse event, seach all the buttons
+            // if there has been a NEW mouse event, search all the buttons
             if (GlobalInteractionHandler.MouseEventsHaveUpdated) {
                 // if there is a mouse event where the mouse has clicked within a button's area, reset the mouse event flag and update button state
                 if (GU.IsWithinArea(new Vector2<Integer>((int) GlobalInteractionHandler.PreviousMouseEvents[0].getPoint().getX(), (int) GlobalInteractionHandler.PreviousMouseEvents[0].getPoint().getY()), B.GetAdjustedOrigin(), B.GetAdjustedDimensions(), true)) {

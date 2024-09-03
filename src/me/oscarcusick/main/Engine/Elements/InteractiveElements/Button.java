@@ -3,12 +3,9 @@ package me.oscarcusick.main.Engine.Elements.InteractiveElements;
 import me.oscarcusick.main.Engine.DataTypes.Identification;
 import me.oscarcusick.main.Engine.Elements.VisualElements.TextBox;
 import me.oscarcusick.main.Engine.Utility.GeneralUtility;
-import me.oscarcusick.main.Math.Vector2;
+import me.oscarcusick.main.Engine.Math.Vector2;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.security.NoSuchAlgorithmException;
-import java.util.Set;
 
 public class Button {
     // constants

@@ -1,6 +1,6 @@
 package me.oscarcusick.main.Engine.DataTypes;
 
-import me.oscarcusick.main.Math.Vector2;
+import me.oscarcusick.main.Engine.Math.Vector2;
 
 import java.awt.*;
 import java.util.ArrayList;

@@ -2,7 +2,7 @@ package me.oscarcusick.main.Engine.Elements.VisualElements;
 
 import me.oscarcusick.main.Engine.DataTypes.AdvancedCharacter;
 import me.oscarcusick.main.Engine.DataTypes.AdvancedString;
-import me.oscarcusick.main.Math.Vector2;
+import me.oscarcusick.main.Engine.Math.Vector2;
 
 import java.awt.*;
 import java.util.ArrayList;

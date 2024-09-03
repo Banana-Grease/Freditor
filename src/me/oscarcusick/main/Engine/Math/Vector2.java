@@ -1,4 +1,4 @@
-package me.oscarcusick.main.Math;
+package me.oscarcusick.main.Engine.Math;
 
 import java.util.ArrayList;
 
