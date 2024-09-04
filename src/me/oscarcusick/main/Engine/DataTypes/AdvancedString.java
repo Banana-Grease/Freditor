@@ -77,4 +77,23 @@ public class AdvancedString extends ArrayList<AdvancedString> {
     public void SetCharacter(int CharacterIndex, AdvancedCharacter NewCharacter) {
         this.AdvancedStringData.set(CharacterIndex, NewCharacter);
     }
+
+    // imports a regular string with all characters set to one font
+    public AdvancedString FromRegularStringData(String StringData, Font Font, Graphics2D G) {
+        AdvancedString AdvStr = new AdvancedString(new ArrayList<>());
+        AdvancedCharacter AdvChar = new AdvancedCharacter(G, ' ');
+        AdvChar.SetFont(Font);
+        for (char C : StringData.toCharArray()) {
+            AdvChar.SetCharacter(C);
+            AdvStr.AddCharacter(AdvChar);
+        }
+        return AdvStr;
+    }
+
+    // set all the characters' Graphics Environment (unsafe if character is drawn before Graphics2D is set)
+    public void SetAllCharacterGraphics2D(Graphics2D G) {
+        for (AdvancedCharacter AdvC : this.AdvancedStringData) {
+            AdvC.SetGraphics2D(G);
+        }
+    }
 }

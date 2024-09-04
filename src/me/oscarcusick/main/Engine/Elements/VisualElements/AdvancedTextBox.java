@@ -67,10 +67,11 @@ public class AdvancedTextBox {
 
         G.setColor(Color.white);
 
+    // loop each character on each line and draw them
     for (AdvancedString AdvString : AdvancedStringsData) {
         for (AdvancedCharacter AdvCharacter : AdvString.GetRawData()) {
             AdvCharacter.Draw();
-            System.out.println("Drew '" + AdvCharacter.GetCharacter() + "' @Point: (" + AdvCharacter.GetOriginPoint().GetValue(Vector2.Dimensions.X) + ", " + AdvCharacter.GetOriginPoint().GetValue(Vector2.Dimensions.Y) + ")");
+            //System.out.println("Drew '" + AdvCharacter.GetCharacter() + "' @Point: (" + AdvCharacter.GetOriginPoint().GetValue(Vector2.Dimensions.X) + ", " + AdvCharacter.GetOriginPoint().GetValue(Vector2.Dimensions.Y) + ")");
         }
     }
 
@@ -118,5 +119,12 @@ public class AdvancedTextBox {
     }
     public void SetCharacterOnLine(int TargetLineIndex, int TargetCharacterIndex, AdvancedCharacter NewCharacter) {
         this.AdvancedStringsData.get(TargetLineIndex).SetCharacter(TargetCharacterIndex, NewCharacter);
+    }
+
+    // set all the characters' Graphics Environment (unsafe if character is drawn before Graphics2D is set)
+    public void SetAllCharacterGraphics2D(Graphics2D G) {
+        for (AdvancedString AdvStr : this.AdvancedStringsData) {
+            AdvStr.SetAllCharacterGraphics2D(G);
+        }
     }
 }

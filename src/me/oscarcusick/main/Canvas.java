@@ -49,7 +49,11 @@ public class Canvas extends JComponent {
 
         ER.RegisterNewElement(ElementRegistry.ElementTypes.Button, new Button(new Vector2<Integer>(70, 70), new Vector2<Integer>(100, 100), "Bold"));
 
-        ATB.AddNewLine(new AdvancedString(new ArrayList<>()));
+        AdvancedString TempStr = new AdvancedString(new ArrayList<>());
+        TempStr = TempStr.FromRegularStringData("I Like Men", new Font("Cascadia Code Regular", Font.BOLD, 20), null);
+
+        ATB.AddNewLine(TempStr);
+
 
     }
 
@@ -96,26 +100,12 @@ public class Canvas extends JComponent {
         // done with this draw cycle
         //repaint(); // re-draw
 
-        ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'a'));
-        ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'b'));
-        ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'c'));
-        ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'd'));
-        ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'e'));
-        ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'f'));
 
-        ATB.AddNewLine(new AdvancedString(new ArrayList<>()));
-
-        ATB.AddCharacterToLine(1, new AdvancedCharacter(g2, 'g'));
-        ATB.AddCharacterToLine(1, new AdvancedCharacter(g2, 'h'));
-        ATB.AddCharacterToLine(1, new AdvancedCharacter(g2, 'i'));
-        ATB.AddCharacterToLine(1, new AdvancedCharacter(g2, 'j'));
-        ATB.AddCharacterToLine(1, new AdvancedCharacter(g2, 'k'));
-        ATB.AddCharacterToLine(1, new AdvancedCharacter(g2, 'l'));
-
+        ATB.SetAllCharacterGraphics2D(g2);
         ATB.SetGraphics2D(g2);
+
 
         ATB.Draw();
     }
-
-
+    
 }
