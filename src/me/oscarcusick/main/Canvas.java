@@ -49,12 +49,6 @@ public class Canvas extends JComponent {
 
         ER.RegisterNewElement(ElementRegistry.ElementTypes.Button, new Button(new Vector2<Integer>(70, 70), new Vector2<Integer>(100, 100), "Bold"));
 
-        AdvancedString TempStr = new AdvancedString(new ArrayList<>());
-        TempStr = TempStr.FromRegularStringData("I Like Men", new Font("Cascadia Code Regular", Font.BOLD, 20), null);
-
-        ATB.AddNewLine(TempStr);
-
-
     }
 
     public void paint(Graphics g) { // main paint loop
@@ -100,12 +94,18 @@ public class Canvas extends JComponent {
         // done with this draw cycle
         //repaint(); // re-draw
 
+        AdvancedString TempStr = new AdvancedString(new ArrayList<>());
+        TempStr = TempStr.FromRegularStringData("I like men", new Font("Cascadia Code Regular", Font.BOLD, 20), null);
 
-        ATB.SetAllCharacterGraphics2D(g2);
-        ATB.SetGraphics2D(g2);
+        ATB.AddNewLine(TempStr);
 
+        //ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'a'));
+        //ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'b'));
+        //ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'c'));
+        //ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'd'));
+        //ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'e'));
 
-        ATB.Draw();
+        ATB.Draw(g2);
     }
     
 }

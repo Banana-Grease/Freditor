@@ -56,11 +56,12 @@ public class AdvancedTextBox {
         return ReturnDrawX;
     }
 
-    public void Draw() {
+    public void Draw(Graphics2D G) {
 
         // loop all characters on each line and calculate their X & Y Position
         for (int i = 0; i < AdvancedStringsData.size(); i++) {
             for (int y = 0; y < AdvancedStringsData.get(i).GetRawData().size(); y++) {
+                AdvancedStringsData.get(i).SetAllCharacterGraphics2D(G);
                 AdvancedStringsData.get(i).GetRawData().get(y).SetOriginPoint(new Vector2<Integer>(GetDrawX(i, y) + this.OriginPoint.GetValue(Vector2.Dimensions.X), GetDrawY(i) + this.OriginPoint.GetValue(Vector2.Dimensions.Y)));
             }
         }
@@ -71,10 +72,13 @@ public class AdvancedTextBox {
     for (AdvancedString AdvString : AdvancedStringsData) {
         for (AdvancedCharacter AdvCharacter : AdvString.GetRawData()) {
             AdvCharacter.Draw();
-            //System.out.println("Drew '" + AdvCharacter.GetCharacter() + "' @Point: (" + AdvCharacter.GetOriginPoint().GetValue(Vector2.Dimensions.X) + ", " + AdvCharacter.GetOriginPoint().GetValue(Vector2.Dimensions.Y) + ")");
+            System.out.println("Drew '" + AdvCharacter.GetCharacter() + "' @Point: (" + AdvCharacter.GetOriginPoint().GetValue(Vector2.Dimensions.X) + ", " + AdvCharacter.GetOriginPoint().GetValue(Vector2.Dimensions.Y) + ")");
         }
     }
 
+    }
+    public void Draw() {
+        Draw(this.G);
     }
 
     public boolean GetDrawBoundingBox() {

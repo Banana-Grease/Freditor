@@ -2,6 +2,7 @@ package me.oscarcusick.main.Engine.DataTypes;
 
 import me.oscarcusick.main.Engine.Math.Vector2;
 
+import javax.lang.model.type.NullType;
 import java.awt.*;
 
 public class AdvancedCharacter {
@@ -16,15 +17,20 @@ public class AdvancedCharacter {
     // this is optional to set, it just may make drawing characters easier
     private Vector2<Integer> OriginPoint = null;
 
-    private Graphics2D G;
+    private Graphics2D G = null;
 
     // updates the dimensions of the character for once it will be displayed
     // this should be called after anything is changed so the information is always accurate when drawing from arrays etc
     private void UpdateDimensions() {
+        // make sure G is not null, it is allowed to be null just make sure its not before drawing
+        if (G == null) {
+            return;
+        }
         CharacterDimensions = new Vector2<Integer>(this.G.getFontMetrics(DisplayFont).charWidth(Character), this.G.getFontMetrics(DisplayFont).getHeight());
     }
 
     // constructor
+    // not smart to pass null to G (Not a bug, a feature to keep devs on toes)
     public AdvancedCharacter(Graphics2D G, char DefaultCharacter) {
         this.G = G;
 
@@ -62,6 +68,7 @@ public class AdvancedCharacter {
     }
 
     public Vector2<Integer> GetDimensions() {
+        UpdateDimensions();
         return this.CharacterDimensions;
     }
 
@@ -74,5 +81,13 @@ public class AdvancedCharacter {
 
     public void SetGraphics2D(Graphics2D NewGraphics2D) {
         this.G = NewGraphics2D;
+    }
+
+    public boolean GraphicsIsNULL() {
+        if (this.G == null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
