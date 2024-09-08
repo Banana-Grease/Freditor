@@ -30,7 +30,7 @@ public class AdvancedTextBox {
     }
 
     // how low to draw this specific character so no overlap occurs
-    private int GetDrawY(int TargetLine) {
+    private int GetDrawY(int TargetLine, Graphics2D G) {
         int ReturnDrawY = 0;
 
         if (IndentEntireLine && TargetLine <= AdvancedStringsData.size()) {
@@ -40,6 +40,9 @@ public class AdvancedTextBox {
         }
 
         return ReturnDrawY;
+    }
+    private int GetDrawY(int TargetLine) {
+        return GetDrawY(TargetLine, this.G);
     }
     // how far along to draw a certain character
     private int GetDrawX(int TargetLine, int TargetCharacter) {
@@ -62,7 +65,7 @@ public class AdvancedTextBox {
         for (int i = 0; i < AdvancedStringsData.size(); i++) {
             for (int y = 0; y < AdvancedStringsData.get(i).GetRawData().size(); y++) {
                 AdvancedStringsData.get(i).SetAllCharacterGraphics2D(G);
-                AdvancedStringsData.get(i).GetRawData().get(y).SetOriginPoint(new Vector2<Integer>(GetDrawX(i, y) + this.OriginPoint.GetValue(Vector2.Dimensions.X), GetDrawY(i) + this.OriginPoint.GetValue(Vector2.Dimensions.Y)));
+                AdvancedStringsData.get(i).GetRawData().get(y).SetOriginPoint(new Vector2<Integer>(GetDrawX(i, y) + this.OriginPoint.GetValue(Vector2.Dimensions.X), GetDrawY(i, G) + this.OriginPoint.GetValue(Vector2.Dimensions.Y)));
             }
         }
 
@@ -95,6 +98,10 @@ public class AdvancedTextBox {
         this.BoundingBoxColour = BoundingBoxColour;
     }
 
+    /**
+     * @deprecated
+     */
+    // set graphics 2d for just this class
     public void SetGraphics2D(Graphics2D NewGraphics2D) {
         this.G = NewGraphics2D;
     }
@@ -126,9 +133,20 @@ public class AdvancedTextBox {
     }
 
     // set all the characters' Graphics Environment (unsafe if character is drawn before Graphics2D is set)
+
+
+    /**
+     * @deprecated
+     */
     public void SetAllCharacterGraphics2D(Graphics2D G) {
         for (AdvancedString AdvStr : this.AdvancedStringsData) {
             AdvStr.SetAllCharacterGraphics2D(G);
         }
+    }
+
+    // just set everything in one call to make my life easier
+    public void SetEverythingGraphics2D(Graphics2D NewGraphics2D) {
+        SetGraphics2D(NewGraphics2D);
+        SetAllCharacterGraphics2D(NewGraphics2D);
     }
 }

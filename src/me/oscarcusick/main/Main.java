@@ -86,10 +86,6 @@ public class Main {
         // set visible
         window.setVisible(true);
 
-        //for (Font F : GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts()) {
-        //    System.out.println(F.getFontName());
-        //}
-
         Identification ID = new Identification();
         ID.setIDNumber("asdas");
 

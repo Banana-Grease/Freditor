@@ -84,18 +84,16 @@ public class Canvas extends JComponent {
         FPSCounter.SetDrawBoundingBox(true);
         FPSCounter.Draw();
 
+
         ER.ElementDraw(g2);
 
-        g2.setColor(Color.red);
-        g2.fillRect(152, 152, 2, 2);
-        g2.fillRect(82, 82, 2, 2);
 
         //System.out.println(g2.getFontMetrics().getHeight());
         // done with this draw cycle
         //repaint(); // re-draw
 
         AdvancedString TempStr = new AdvancedString(new ArrayList<>());
-        TempStr = TempStr.FromRegularStringData("I like men", new Font("Cascadia Code Regular", Font.BOLD, 20), null);
+        TempStr.SetFromRegularStringData("I like men", new Font("Cascadia Code Regular", Font.BOLD, 20), g2);
 
         ATB.AddNewLine(TempStr);
 
