@@ -37,8 +37,6 @@ public class Canvas extends JComponent {
     InteractionHandler IH;
     Timing Time;
 
-    AdvancedTextBox ATB = new AdvancedTextBox(new Vector2<Integer>(200, 200), new Vector2<Integer>(200, 200));
-
     public Canvas(int WindowSizeX, int WindowSizeY, InteractionHandler IH, ElementRegistry ER) {
         ScreenDimensions[ScreenX] = WindowSizeX;
         ScreenDimensions[ScreenY] = WindowSizeY;
@@ -46,9 +44,6 @@ public class Canvas extends JComponent {
         this.IH = IH;
         this.Time = new Timing(60);
         this.ER = ER;
-
-        ER.RegisterNewElement(ElementRegistry.ElementTypes.Button, new Button(new Vector2<Integer>(70, 70), new Vector2<Integer>(100, 100), "Bold"));
-
     }
 
     public void paint(Graphics g) { // main paint loop
@@ -92,18 +87,12 @@ public class Canvas extends JComponent {
         // done with this draw cycle
         //repaint(); // re-draw
 
-        AdvancedString TempStr = new AdvancedString(new ArrayList<>());
-        TempStr.SetFromRegularStringData("I like men", new Font("Cascadia Code Regular", Font.BOLD, 20), g2);
+        // NEED TO FIX ADVANCED STRING AFTER DATA STORAGE IS COMPLETED
 
-        ATB.AddNewLine(TempStr);
+        // DataStorage & Time Scheduler using abstract classes. Testing
 
-        //ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'a'));
-        //ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'b'));
-        //ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'c'));
-        //ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'd'));
-        //ATB.AddCharacterToLine(0, new AdvancedCharacter(g2, 'e'));
 
-        ATB.Draw(g2);
+
     }
     
 }
